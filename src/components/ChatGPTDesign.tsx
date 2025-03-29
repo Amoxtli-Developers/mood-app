@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { Send } from "lucide-react";
-import Link from "next/link";
 
 import theme from "../../theme";
 import LandingScreen from "./LandingScreen";
