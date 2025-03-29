@@ -14,11 +14,9 @@ let theme = createTheme({
             primary: "#fbfbfb",
         },
     },
-    // Border radius global de 10px
     shape: {
         borderRadius: 10,
     },
-    // Fuente base en 12px con Inter
     typography: {
         fontSize: 12,
         fontFamily: "Inter, sans-serif",

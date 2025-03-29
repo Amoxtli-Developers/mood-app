@@ -1,12 +1,6 @@
 import React from "react";
 import { ListItem, Paper, ListItemText } from "@mui/material";
-
-type Role = "system" | "user" | "assistant";
-
-interface MessageBubbleProps {
-    role: Role;
-    content: string;
-}
+import { MessageBubbleProps } from "@/interfaces/interfaces";
 
 export default function MessageBubble({ role, content }: MessageBubbleProps) {
     const align = role === "user" ? "flex-end" : "flex-start";
@@ -20,7 +14,6 @@ export default function MessageBubble({ role, content }: MessageBubbleProps) {
                     p: 1,
                     backgroundColor: bgColor,
                     color: textColor,
-                    borderRadius: 2,
                     maxWidth: 500,
                 }}
             >

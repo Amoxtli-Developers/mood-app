@@ -9,14 +9,14 @@ import {
 import { useTheme } from "@mui/material/styles";
 import { FaSpotify, FaApple, FaYoutube } from "react-icons/fa";
 import Image from "next/image";
-import mood from "../assets/white.svg";
+import mood from "@/assets/mood.svg";
+import { SignInDialogProps } from "@/interfaces/interfaces";
 
-interface SignInDialogProps {
-    open: boolean;
-    onSignIn: (provider: "spotify" | "apple" | "youtube") => void;
-}
-
-const SignInDialog: React.FC<SignInDialogProps> = ({ open, onSignIn }) => {
+const SignInDialog: React.FC<SignInDialogProps> = ({
+    open,
+    onSignIn,
+    onContinueAsGuest,
+}) => {
     const theme = useTheme();
 
     return (
@@ -26,14 +26,22 @@ const SignInDialog: React.FC<SignInDialogProps> = ({ open, onSignIn }) => {
                 backdropFilter: "blur(5px)",
                 "& .MuiPaper-root": {
                     backgroundColor: "black !important",
-                    width: "400px", // Increased width
-                    maxWidth: "90%", // Responsive width
+                    width: "400px",
+                    maxWidth: "90%",
                     padding: theme.spacing(2),
                 },
             }}
         >
-            <Image src={mood} alt="Mood Music AI" width={200} height={50} style={{ margin: "0 auto", marginBottom: 16 }} />
-            <DialogTitle textAlign={'center'}>Inicia sesión con tu servicio de música</DialogTitle>
+            <Image
+                src={mood}
+                alt="Mood Music AI"
+                width={200}
+                height={50}
+                style={{ margin: "0 auto", marginBottom: 16 }}
+            />
+            <DialogTitle textAlign={"center"} display={'flex'} alignItems={'center'}>
+                Inicia sesión con tu servicio de música favorito
+            </DialogTitle>
             <DialogContent>
                 <Stack spacing={2} sx={{ mt: 1 }}>
                     <Button
@@ -42,7 +50,7 @@ const SignInDialog: React.FC<SignInDialogProps> = ({ open, onSignIn }) => {
                         fullWidth
                         startIcon={<FaSpotify />}
                         onClick={() => onSignIn("spotify")}
-                        sx={{fontWeight: 500}}
+                        sx={{ fontWeight: 500 }}
                     >
                         Sign in with Spotify
                     </Button>
@@ -52,7 +60,7 @@ const SignInDialog: React.FC<SignInDialogProps> = ({ open, onSignIn }) => {
                         fullWidth
                         startIcon={<FaApple />}
                         onClick={() => onSignIn("apple")}
-                        sx={{fontWeight: 500}}
+                        sx={{ fontWeight: 500 }}
                     >
                         Sign in with Apple Music
                     </Button>
@@ -62,10 +70,21 @@ const SignInDialog: React.FC<SignInDialogProps> = ({ open, onSignIn }) => {
                         fullWidth
                         startIcon={<FaYoutube />}
                         onClick={() => onSignIn("youtube")}
-                        sx={{fontWeight: 500}}
+                        sx={{ fontWeight: 500 }}
                     >
                         Sign in with YouTube
                     </Button>
+                    {onContinueAsGuest && (
+                        <Button
+                            variant="text"
+                            color="primary"
+                            fullWidth
+                            onClick={onContinueAsGuest}
+                            sx={{ fontWeight: 500, mt: 2 }}
+                        >
+                            Continuar como invitado
+                        </Button>
+                    )}
                 </Stack>
             </DialogContent>
         </Dialog>
