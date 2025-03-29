@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, Typography, useTheme } from "@mui/material";
-import CardContent from "./CardContent";
+import CardContent from "@/components/Layout/CardContent";
 import { Smile, Sparkles, AudioWaveform } from "lucide-react";
 import Image from "next/image";
-import mood from "../assets/mood.svg";
+import mood from "@/assets/mood.svg";
 
 export default function LandingScreen() {
     const theme = useTheme();
