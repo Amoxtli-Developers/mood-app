@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import ReduxProviderWrapper from "@/components/Layout/ReduxProviderWrapper";
 
 /* 
-   1. Carga de la fuente Inter desde Google Fonts
+   1. Load the Inter font from Google Fonts
 */
 const inter = Inter({
     variable: "--font-inter",
@@ -11,7 +12,7 @@ const inter = Inter({
 });
 
 /* 
-   2. Metadatos de Next.js (SEO básico + Open Graph + Twitter Cards)
+   2. Next.js metadata (basic SEO + Open Graph + Twitter Cards)
 */
 export const metadata: Metadata = {
     title: "Mood Music AI – Descubre la música que se adapta a tu estado de ánimo",
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
         title: "Mood Music AI",
         description:
             "Descubre la música perfecta para cada estado de ánimo con recomendaciones basadas en IA y NLP. Integra Spotify, Apple Music y YouTube para crear playlists personalizadas.",
-        url: "https://www.tusitio.com", // Reemplaza con tu dominio real
+        url: "https://www.tusitio.com", // Replace with your actual domain
         siteName: "Mood Music AI",
         images: [
             {
@@ -47,8 +48,9 @@ export const metadata: Metadata = {
 };
 
 /*
-   3. RootLayout con metaetiquetas personalizadas para SEO avanzado.
-   Se agregan meta keywords, autor, robots, etc. dentro de <head>.
+   3. RootLayout with additional meta tags for advanced SEO.
+   This is now a Server Component (without "use client") so you can export metadata.
+   The ReduxProviderWrapper is a Client Component that wraps your app with the Redux Provider.
 */
 export default function RootLayout({
     children,
@@ -58,20 +60,20 @@ export default function RootLayout({
     return (
         <html lang="es">
             <head>
-                {/* Ícono */}
+                {/* Icon */}
                 <link rel="icon" href="/favicon.png" />
-
-                {/* Etiquetas meta adicionales para SEO */}
+                {/* Additional SEO meta tags */}
                 <meta
                     name="keywords"
                     content="música, playlists, inteligencia artificial, recomendación musical, IA, NLP, Spotify, Apple Music, YouTube, estado de ánimo, actividades, chat interactivo, Watson Assistant, recomendador, Mood Music AI"
                 />
                 <meta name="author" content="Amoxtli Web Developers" />
                 <meta name="robots" content="index, follow" />
-                {/* Color del navegador en dispositivos móviles (opcional) */}
                 <meta name="theme-color" content="#31D158" />
             </head>
-            <body className={`${inter.variable} antialiased`}>{children}</body>
+            <body className={`${inter.variable} antialiased`}>
+                <ReduxProviderWrapper>{children}</ReduxProviderWrapper>
+            </body>
         </html>
     );
 }

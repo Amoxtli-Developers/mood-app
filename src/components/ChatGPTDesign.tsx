@@ -1,4 +1,6 @@
+// src/components/ChatGPTDesign.tsx
 "use client";
+
 import React, { useState } from "react";
 import {
     Box,
@@ -21,29 +23,34 @@ import LandingScreen from "@/components/Layout/LandingScreen";
 import MessageBubble from "@/components/Layout/MessageBubble";
 import SignInDialog from "./SignInDialog";
 
-type Role = "system" | "user" | "assistant";
-interface Message {
+export type Role = "system" | "user" | "assistant";
+export interface Message {
     role: Role;
     content: string;
 }
 
-export default function ChatGPTDesign() {
+interface ChatGPTDesignProps {
+    userInput: string;
+    setUserInput: (value: string) => void;
+    messages: Message[];
+    setMessages: (value: Message[] | ((prev: Message[]) => Message[])) => void;
+    onSendMessage: (message: string) => void; // New prop to handle sending
+}
+
+export default function ChatGPTDesign({
+    userInput,
+    setUserInput,
+    messages,
+    setMessages,
+    onSendMessage,
+}: ChatGPTDesignProps) {
     const [signedIn, setSignedIn] = useState(false);
-    const [userInput, setUserInput] = useState("");
-    const [messages, setMessages] = useState<Message[]>([]);
 
     const handleSendMessage = () => {
         if (!userInput.trim()) return;
-
-        const newUserMessage: Message = { role: "user", content: userInput };
-        setMessages((prev) => [...prev, newUserMessage]);
-
-        const simulatedResponse: Message = {
-            role: "assistant",
-            content: "Esta es una respuesta simulada de nuestra IA.",
-        };
-
-        setMessages((prev) => [...prev, simulatedResponse]);
+        // Execute the passed-in send function
+        onSendMessage(userInput);
+        // Clear the input after sending
         setUserInput("");
     };
 
@@ -71,7 +78,6 @@ export default function ChatGPTDesign() {
                     px: { xs: 1, sm: 2, md: 4 },
                 }}
             >
-                {/* AppBar con logo a la izquierda y texto a la derecha */}
                 <AppBar position="static" color="transparent" elevation={1}>
                     <Toolbar>
                         <Image src={mood} alt="Logo" width={100} height={100} />
@@ -93,7 +99,6 @@ export default function ChatGPTDesign() {
                     </Toolbar>
                 </AppBar>
 
-                {/* Contenedor principal */}
                 <Container
                     sx={{
                         flexGrow: 1,
@@ -106,7 +111,6 @@ export default function ChatGPTDesign() {
                     }}
                     maxWidth="lg"
                 >
-                    {/* Área de mensajes */}
                     <Box sx={{ flexGrow: 1, overflow: "auto" }}>
                         {messages.length === 0 ? (
                             <LandingScreen />
@@ -123,7 +127,6 @@ export default function ChatGPTDesign() {
                         )}
                     </Box>
 
-                    {/* Área de entrada anclada en la parte inferior */}
                     <Paper
                         elevation={0}
                         sx={{
